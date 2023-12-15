@@ -1,8 +1,10 @@
 
 module "vpc" {
-  source                 = "./modules/vpc"
-  vpc_cidr               = var.vpc_cidr
-  env                    = var.env
+  source = "./modules/vpc"
+  vpc_cidr = var.vpc_cidr
+  env = var.env
+  project_name = "expense"
+
 #  private_subnets        = var.private_subnets
 #  public_subnets         = var.public_subnets
 #  azs                    = var.azs
