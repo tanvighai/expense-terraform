@@ -45,3 +45,13 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_eip" "ngw" {
   domain   = "vpc"
 }
+
+#Create Network Gateway
+resource "aws_nat_gateway" "example" {
+  allocation_id = aws_eip.ngw.id
+  subnet_id     = aws_subnet.public_subnets[0].id
+
+  tags = {
+    Name = "${var.env}-ngw"
+  }
+
