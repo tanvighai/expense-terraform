@@ -32,3 +32,8 @@ resource "aws_subnet" "private_subnets" {
     Name = "private_subnet-${count.index+1}"
   }
 }
+
+#creating internet gateway and attaching it to VPC
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+}
