@@ -26,6 +26,7 @@ resource "aws_security_group" "security_group" {
   }
 }
 ##let's created a lunch template
+##we will be using template file for storing the configurations
 resource "aws_launch_template" "template" {
   name = "${var.env}-${var.component}"
 #  iam_instance_profile {
@@ -35,6 +36,12 @@ resource "aws_launch_template" "template" {
   image_id = data.aws_ami.ami.id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.security_group.id]
+  user_data = base64encode(templatefile("${path.module}/userdata.sh") ,{
+    role_name = var.component
+
+
+})
+  #templatefile("${path.module}/backends.tftpl", { port = 8080, ip_addrs = ["10.0.0.1", "10.0.0.2"] })
   tag_specifications {
     resource_type = "instance"
 
@@ -43,7 +50,6 @@ resource "aws_launch_template" "template" {
     }
   }
 
-#  user_data = filebase64("${path.module}/example.sh")
 }
 #in which subnet our nodes will be launched is not being provided in the launch template
 ##so lets create an autoscaling group
