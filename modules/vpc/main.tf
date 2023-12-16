@@ -80,7 +80,7 @@ resource "aws_route_table" "private" {
   }
   route {
     cidr_block = var.default_vpc_cidr
-    vpc_peering_id = aws_vpc_peering_connection.peering.id
+    vpc_peering_id = aws_vpc_peering_connection.peering
   }
   tags = {
     Name = "private"
