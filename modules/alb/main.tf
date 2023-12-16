@@ -26,7 +26,7 @@ resource "aws_security_group" "security_group" {
 }
 
 ##Creating a public load balancer
-resource "aws_lb" "test" {
+resource "aws_lb" "alb" {
   name               = "${var.env}-${var.alb_type}"
   internal           = var.internal
   load_balancer_type = "application"
@@ -36,3 +36,15 @@ resource "aws_lb" "test" {
     Environment = "${var.env}-${var.alb_type}"
   }
 }
+
+##Creating a private load balancer
+#resource "aws_lb" "abl" {
+#  name               = "${var.env}-${var.alb_type}"
+#  internal           = var.internal
+#  load_balancer_type = "application"
+#  security_groups    = [aws_security_group.security_group.id]
+#  subnets            = var.subnets
+#  tags = {
+#    Environment = "${var.env}-${var.alb_type}"
+#  }
+#}

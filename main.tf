@@ -23,8 +23,16 @@ module "public-lb" {
   subnets = module.vpc.public_subnets
   vpc_id = module.vpc.vpc_id
 }
-
-
+##module for private load balancer
+module "private-lb" {
+  source = "./modules/alb"
+  alb_sg_allow_cidr = "0.0.0.0/0"
+  alb_type = "private"
+  env = var.env
+  internal = true
+  subnets = module.vpc.private_subnets
+  vpc_id = module.vpc.vpc_id
+}
 
 
 
