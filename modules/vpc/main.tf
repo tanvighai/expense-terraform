@@ -42,6 +42,9 @@ resource "aws_internet_gateway" "igw" {
 #configure and elastic ip address basically which will be the ip address of our VPC
 resource "aws_eip" "ngw" {
   domain   = "vpc"
+  tags = {
+    Name = "ngw"
+  }
 }
 
 #Create Network Gateway
