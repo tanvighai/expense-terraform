@@ -112,3 +112,16 @@ resource "aws_route" "default_route_table_id" {
 #since we will not be creating any instance in the public subnet so there is no need for peering connection however for private it is needed
 #Add default and NGW to private route table
 #Add IGW to Public route table
+
+###ADD public route table to public subnet and private route table to private subnet via route tale association resource
+resource "aws_main_route_table_association" "public" {
+  count = length(var.public_subnets)
+  subnet_id         = aws_subnet.public_subnets[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_main_route_table_association" "private" {
+  count = length(var.private_subnets)
+  subnet_id         = aws_subnet.private_subnets[count.index].id
+  route_table_id = aws_route_table.private.id
+}
