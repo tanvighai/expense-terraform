@@ -6,3 +6,4 @@ private_subnets = ["10.0.2.0/24" , "10.0.3.0/24"]
 azs = ["us-east-1a" , "us-east-1b"]
 account_no = "447398680555"
 default_vpc_id = "vpc-0c05c87b359349799"
+default_vpc_cidr = "172.31.0.0/16"
