@@ -82,3 +82,18 @@ resource "aws_route_table" "private" {
     Name = "private"
   }
 }
+
+#Add Peering connection
+resource "aws_vpc_peering_connection" "peering" {
+  peer_owner_id = var.account_no
+  peer_vpc_id   = var.default_vpc_id
+  vpc_id        = aws_vpc.main.id
+  auto_accept = true
+  tags = {
+    Name = "peering from default-vpc-to-${var.env}-vpc"
+  }
+
+}
+
+#Add IGW to Public route table  and NGW to private route table
+#Add IGW to Public route table
