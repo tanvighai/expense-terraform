@@ -60,6 +60,7 @@ resource "aws_nat_gateway" "ngw" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 #why we have taken 0.0.0.0
+  #Add IGW to Public route table
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
@@ -74,10 +75,13 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
   #why we have taken 0.0.0.0
+  #Add NGW to private route table
   route {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.ngw.id
   }
+
+  #Add peering connection to private route table
   route {
     cidr_block = var.default_vpc_cidr
     vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
@@ -97,6 +101,14 @@ resource "aws_vpc_peering_connection" "peering" {
     Name = "peering from default-vpc-to-${var.env}-vpc"
   }
 }
+
+#ADD peering connection from default route table to default vpc
+resource "aws_route" "default_route_table_id" {
+  route_table_id            = var.default_route_table_id
+  destination_cidr_block    = var.vpc_cidr
+  vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
+}
+
 #since we will not be creating any instance in the public subnet so there is no need for peering connection however for private it is needed
-#Add IGW to Public route table  and NGW to private route table
+#Add default and NGW to private route table
 #Add IGW to Public route table
