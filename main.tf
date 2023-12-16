@@ -35,6 +35,7 @@ module "private-lb" {
 }
 
 #module for instances
+#module for frontend server
 module "frontend" {
   source = "./modules/app"
   app_port      = 80
@@ -46,6 +47,17 @@ module "frontend" {
   subnets = module.vpc.private_subnets
 }
 
+#module for backend server
+module "backend" {
+  source = "./modules/app"
+  app_port      = 8080
+  component     = "backend"
+  env           = var.env
+  instance_type = "t3.micro"
+  vpc_cidr      = var.vpc_cidr
+  vpc_id        = module.vpc.vpc_id
+  subnets = module.vpc.private_subnets
+}
 
 
 
