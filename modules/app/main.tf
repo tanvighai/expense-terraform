@@ -49,6 +49,7 @@ resource "aws_launch_template" "template" {
 ##so lets create an autoscaling group
 
 resource "aws_autoscaling_group" "asg" {
+  vpc_zone_identifier = var.subnets
   name = "${var.env}-${var.component}"
   desired_capacity   = 1
   max_size           = 1
