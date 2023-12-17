@@ -81,7 +81,7 @@ resource "aws_autoscaling_group" "asg" {
 
 resource "aws_iam_role" "role" {
   name               = "${var.env}-${var.component}-role"
-  assume_role_policy = jsonecode({
+  assume_role_policy = jsonencode({
 
     "Version" : "2012-10-17",
     "Statement" : [
@@ -98,7 +98,7 @@ resource "aws_iam_role" "role" {
 
   inline_policy {
     name = "${var.env}-${var.component}-policy"
-    policy = jsondecode(
+    policy = jsonencode(
       {
         "Version": "2012-10-17",
         "Statement": [
