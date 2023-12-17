@@ -39,9 +39,10 @@ resource "aws_security_group" "security_group" {
 ##we will be using template file for storing the configurations
 resource "aws_launch_template" "template" {
   name = "${var.env}-${var.component}"
-#  iam_instance_profile {
-#    name = "test"
-#  }
+  #lets connect the created roles to their respective instances
+  iam_instance_profile {
+   name = aws_iam_role.role.name
+ }
 
   image_id = data.aws_ami.ami.id
   instance_type = var.instance_type
@@ -124,6 +125,9 @@ resource "aws_iam_role" "role" {
     tag-key = "${var.env}-${var.component}-role"
   }
 }
+
+#lets connect the created roles to their respective instances
+
 
 
 
