@@ -45,6 +45,7 @@ module "frontend" {
   vpc_cidr      = var.vpc_cidr
   vpc_id        = module.vpc.vpc_id
   subnets = module.vpc.private_subnets
+  bastion_node_cidr = var.bastion_node_cidr
 }
 
 #module for backend server
@@ -57,6 +58,7 @@ module "backend" {
   vpc_cidr      = var.vpc_cidr
   vpc_id        = module.vpc.vpc_id
   subnets = module.vpc.private_subnets
+  bastion_node_cidr = var.bastion_node_cidr
 }
 
 

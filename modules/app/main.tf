@@ -14,6 +14,16 @@ resource "aws_security_group" "security_group" {
     cidr_blocks      = [var.vpc_cidr]
   }
 
+  ##adding workstation to the security group so that only this node can establish ssh connection with the servers inside the
+  ##private network
+  ingress {
+    description      = "SSH"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [var.bastion_node_cidr]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
