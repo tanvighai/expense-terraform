@@ -74,3 +74,61 @@ resource "aws_autoscaling_group" "asg" {
     version = "$Latest"
   }
 }
+
+##earlier we user role to fetch the parameters form parameter store since we will be having and automated system
+## server should fetch the credentials on their own from parameter store
+#lets create role
+
+resource "aws_iam_role" "role" {
+  name               = "${var.env}-${var.component}-role"
+  assume_role_policy = jsonecode({
+
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "ec2.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  }
+  )
+
+  inline_policy {
+    name = "${var.env}-${var.component}-policy"
+    policy = jsondecode(
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+              "ssm:DescribeParameters",
+              "ssm:GetParametersByPath",
+              "ssm:GetParameters"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+
+
+    )
+
+}
+
+  tags = {
+    tag-key = "${var.env}-${var.component}-role"
+  }
+}
+
+
+
+
+
+
+
+
