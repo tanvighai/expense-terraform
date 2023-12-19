@@ -43,17 +43,15 @@ resource "aws_rds_cluster" "main" {
   database_name           = "dummy"
   master_username         = data.aws_ssm_parameter.master_username.value
   master_password         = data.aws_ssm_parameter.master_password.value
-  backup_retention_period = 5
-  preferred_backup_window = "07:00-09:00"
   vpc_security_group_ids = [aws_security_group.main.id]
 }
 
 ##creating rds cluster instance
-resource "aws_rds_cluster_instance" "main" {
-  count              = 1
-  identifier         = "${var.env}-${var.component}-instance-${count.index}"
-  cluster_identifier = aws_rds_cluster.main.id
-  instance_class     = "db.t3.medium"
-  engine             = aws_rds_cluster.main.engine
-  engine_version     = aws_rds_cluster.main.engine_version
-}
+#resource "aws_rds_cluster_instance" "main" {
+#  count              = 1
+#  identifier         = "${var.env}-${var.component}-instance-${count.index}"
+#  cluster_identifier = aws_rds_cluster.main.id
+#  instance_class     = "db.t3.medium"
+#  engine             = aws_rds_cluster.main.engine
+#  engine_version     = aws_rds_cluster.main.engine_version
+#}
