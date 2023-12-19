@@ -34,6 +34,7 @@ module "private-lb" {
   vpc_id = module.vpc.vpc_id
   dns_name = "backend-${var.env}.tanvi12online.net"
   zone_id = "Z062321418KWGB5HR8726"
+  tg_arn = module.backend.tg_arn
 }
 #
 ##module for instances
