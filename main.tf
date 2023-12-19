@@ -14,15 +14,18 @@ module "vpc" {
 }
 ##here the vpc module is being used in the load balancer module so we need
 ##to store the output of above module in a file or variable so that we can call that here in this module
-#module "public-lb" {
-#  source = "./modules/alb"
-#  alb_sg_allow_cidr = "0.0.0.0/0"
-#  alb_type = "public"
-#  env = var.env
-#  internal = false
-#  subnets = module.vpc.public_subnets
-#  vpc_id = module.vpc.vpc_id
-#}
+module "public-lb" {
+  source = "./modules/alb"
+  alb_sg_allow_cidr = "0.0.0.0/0"
+  alb_type = "public"
+  env = var.env
+  internal = false
+  subnets = module.vpc.public_subnets
+  vpc_id = module.vpc.vpc_id
+  dns_name = "frontend-${var.env}.tanvi12online.net"
+  zone_id = "Z062321418KWGB5HR8726"
+  tg_arn = module.frontend.tg_arn
+}
 ###module for private load balancer
 module "private-lb" {
   source = "./modules/alb"
