@@ -35,7 +35,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 ##create a rds cluster
-resource "aws_rds_cluster" "default" {
+resource "aws_rds_cluster" "main" {
   cluster_identifier      = "${var.env}-${var.component}"
   engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.3"
@@ -46,4 +46,14 @@ resource "aws_rds_cluster" "default" {
   backup_retention_period = 5
   preferred_backup_window = "07:00-09:00"
   vpc_security_group_ids = [aws_security_group.security_group.id]
+}
+
+##creating rds cluster instance
+resource "aws_rds_cluster_instance" "main" {
+  count              = 1
+  identifier         = "${var.env}-${var.component}-${count.index}"
+  cluster_identifier = aws_rds_cluster.main.id
+  instance_class     = "db.t3.medium"
+  engine             = aws_rds_cluster.main.engine
+  engine_version     = aws_rds_cluster.main.engine_version
 }
