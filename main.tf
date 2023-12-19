@@ -22,7 +22,7 @@ module "public-lb" {
   internal = false
   subnets = module.vpc.public_subnets
   vpc_id = module.vpc.vpc_id
-  dns_name = "frontend-${var.env}.tanvi12online.net"
+  dns_name = "${var.env}.tanvi12online.net"
   zone_id = "Z062321418KWGB5HR8726"
   tg_arn = module.frontend.tg_arn
 }
