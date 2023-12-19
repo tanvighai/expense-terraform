@@ -51,7 +51,7 @@ resource "aws_rds_cluster" "main" {
 ##creating rds cluster instance
 resource "aws_rds_cluster_instance" "main" {
   count              = 1
-  identifier         = "${var.env}-${var.component}-${count.index}"
+  identifier         = "${var.env}-${var.component}-instance-${count.index}"
   cluster_identifier = aws_rds_cluster.main.id
   instance_class     = "db.t3.medium"
   engine             = aws_rds_cluster.main.engine
