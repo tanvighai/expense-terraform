@@ -1,6 +1,6 @@
 ##create a security group
 resource "aws_security_group" "main" {
-  name        = "${var.env}-${var.component}-sg"
+  name        = "${var.env}-${var.component}-sgs"
   description = "${var.env}-${var.component}-sg"
   vpc_id      = var.vpc_id
 
