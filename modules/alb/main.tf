@@ -48,3 +48,14 @@ resource "aws_lb" "alb" {
 #    Environment = "${var.env}-${var.alb_type}"
 #  }
 #}
+
+##creating a DNS record with automation
+##the idea here is to first convert and ip to web address and then that address will point to or readdress to another web address
+##where private load balancer will act as backend server
+resource "aws_route53_record" "www" {
+  zone_id = aws_route53_zone.primary.zone_id
+  name    = var.dns_name
+  type    = "CNAME"
+  ttl     = 300
+  records = [aws_lb.alb.dns_name]
+}

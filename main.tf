@@ -32,6 +32,8 @@ module "private-lb" {
   internal = true
   subnets = module.vpc.private_subnets
   vpc_id = module.vpc.vpc_id
+  dns_name = "backend-${var.env}.tanvi12online.net"
+  zone_id = "Z062321418KWGB5HR8726"
 }
 #
 ##module for instances
