@@ -1,5 +1,5 @@
 ##create a security group
-resource "aws_security_group" "security_group" {
+resource "aws_security_group" "main" {
   name        = "${var.env}-${var.component}-sg"
   description = "${var.env}-${var.component}-sg"
   vpc_id      = var.vpc_id
@@ -45,7 +45,7 @@ resource "aws_rds_cluster" "main" {
   master_password         = data.aws_ssm_parameter.master_password.value
   backup_retention_period = 5
   preferred_backup_window = "07:00-09:00"
-  vpc_security_group_ids = [aws_security_group.security_group.id]
+  vpc_security_group_ids = [aws_security_group.main.id]
 }
 
 ##creating rds cluster instance
