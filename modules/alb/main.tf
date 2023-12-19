@@ -53,7 +53,7 @@ resource "aws_lb" "alb" {
 ##the idea here is to first convert and ip to web address and then that address will point to or readdress to another web address
 ##where private load balancer will act as backend server
 resource "aws_route53_record" "www" {
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = var.zone_id
   name    = var.dns_name
   type    = "CNAME"
   ttl     = 300
