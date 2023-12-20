@@ -23,6 +23,14 @@ resource "aws_security_group" "security_group" {
     protocol         = "tcp"
     cidr_blocks      = var.bastion_node_cidr
   }
+##opening port for prometheus
+  ingress {
+    description      = "PROMETHEUS"
+    from_port        = 9100
+    to_port          = 9100
+    protocol         = "tcp"
+    cidr_blocks      = var.prometheus_cidr
+  }
 
   egress {
     from_port        = 0
@@ -75,6 +83,12 @@ resource "aws_autoscaling_group" "asg" {
   launch_template {
     id      = aws_launch_template.template.id
     version = "$Latest"
+  }
+  #tagging the instance at the time of launch
+  tag {
+    key                 = "project"
+    propagate_at_launch = true
+    value               = "expense"
   }
 }
 
