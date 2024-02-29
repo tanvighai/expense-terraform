@@ -62,6 +62,7 @@ resource "aws_lb" "alb" {
 ##creating a DNS record with automation
 ##the idea here is to first convert and ip to web address and then that address will point to or readdress to another web address
 ##where private load balancer will act as backend server
+#CNAME is the dns record type for the redirection
 resource "aws_route53_record" "www" {
   zone_id = var.zone_id
   name    = var.dns_name
@@ -119,7 +120,7 @@ resource "aws_lb_listener" "listener-https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:us-east-1:447398680555:certificate/aa8c8bdc-e771-43e2-95e0-74cb6bf2c671"
+  certificate_arn   = "arn:aws:acm:us-east-1:447398680555:certificate/86766827-e685-435e-b68f-caf0642a14dc"
 
 
   default_action {
